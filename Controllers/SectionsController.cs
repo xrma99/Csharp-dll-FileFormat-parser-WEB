@@ -9,6 +9,8 @@ using FileUpload.Models;
 using Microsoft.AspNetCore.Http;
 
 using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace FileUpload.Controllers
 {
@@ -61,10 +63,9 @@ namespace FileUpload.Controllers
             int flag = 0;
             int paragraph_sz = 16;//unit:byte
             int section_c = 7;//一共有多少个section，最多有7个
+            string[] section_name = new string[7];
             int[] section_sz = new int[7];
             int[] total_sz = new int[7];//.text .rsrc .reloc
-            byte[] tmp = new byte[4];
-
 
             while (br.BaseStream.Position < br.BaseStream.Length)
             {
@@ -75,8 +76,8 @@ namespace FileUpload.Controllers
 
                         br.ReadBytes(6);
 
-                        ViewBag.MZsize = tmp = Reverseread(br.ReadBytes(2), 0, 1);//get the length of the MZ header
-                        int len = Calculate(tmp, 0, 1);
+                        ViewBag.MZsize = Reverseread(br.ReadBytes(2), 0, 1);//get the length of the MZ header
+                        int len = Calculate(ViewBag.MZsize, 0, 1);
 
                         br.ReadBytes(len * paragraph_sz - 10);
 
@@ -105,8 +106,8 @@ namespace FileUpload.Controllers
 
                         ViewBag.MachineType = Reverseread(br.ReadBytes(2), 0, 1);
 
-                        ViewBag.sectionamount = tmp = Reverseread(br.ReadBytes(2), 0, 1);//get the length of the MZ header
-                        section_c = Calculate(tmp, 0, 1);
+                        ViewBag.sectionamount = Reverseread(br.ReadBytes(2), 0, 1);//get the length of the MZ header
+                        section_c = Calculate(ViewBag.sectionamount, 0, 1);
 
                         br.ReadBytes(240);
 
@@ -133,6 +134,7 @@ namespace FileUpload.Controllers
                                 info = info + c;
                             }
                         }
+                        section_name[border] = info;
                         var newsection = new Section
                         {
                             Name = info,
@@ -141,10 +143,8 @@ namespace FileUpload.Controllers
                             Total_sz = Reverseread(br.ReadBytes(4), 0, 3)
                         };
 
-                        tmp = newsection.Size;
-                        section_sz[border] = Calculate(tmp, 0, 3);
-                        tmp = newsection.Total_sz;
-                        total_sz[border] = Calculate(tmp, 0, 3);
+                        section_sz[border] = Calculate(newsection.Size, 0, 3);
+                        total_sz[border] = Calculate(newsection.Total_sz, 0, 3);
 
                         br.ReadBytes(20);
 
@@ -162,8 +162,8 @@ namespace FileUpload.Controllers
                     case 4://Section Content
                         for (int i = 0; i < section_c; i++)
                         {
-                            
-                            var Thesection = _context.Section.First(a => a.Id == i);
+
+                            var Thesection = _context.Section.First(a => a.Name == section_name[i]);
                             byte[] Thecontent = br.ReadBytes(section_sz[i]);
                             Thesection.content = Thecontent;
                             _context.SaveChanges();
@@ -183,24 +183,23 @@ namespace FileUpload.Controllers
 
         }
 
-
-
         // GET: Sections
+        [HttpPost("Sections")]
         public async Task<IActionResult> Index(IFormFile file)
         {
             string filename = string.Empty;
             if (file != null)
             {
                 filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                string SavePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images", filename);
+                string SavePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\dllfiles", filename);
                 using (var stream = new FileStream(SavePath, FileMode.Create))
                 {
                     file.CopyTo(stream);
                 }
-                return View();
+                return RedirectToAction("Create");
             }
             analyze(filename);
-            return View(await _context.Section.ToListAsync());
+            return  View(await _context.Section.ToListAsync());
         }
 
         // GET: Sections/Details/5

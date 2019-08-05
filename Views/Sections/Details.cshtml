@@ -4,41 +4,48 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+    <h2>Section @Model.Name</h2>
 
 <div>
-    <h4>Section</h4>
+    <h4>@ViewData["Title"]</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+    <dl class="dl-horizontal" style="table-layout:fixed;width:100%">
         <dt>
             @Html.DisplayNameFor(model => model.Size)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Size)
+            @foreach (byte part in Model.Size)
+            {
+                @part.ToString("X2")
+            }
+            <!--@Html.DisplayFor(model => model.Size)-->
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Vaddr)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Vaddr)
+            @foreach (byte part in Model.Vaddr)
+            {
+                @part.ToString("X2")
+            }
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Total_sz)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Total_sz)
+            @foreach (byte part in Model.Total_sz)
+            {
+                @part.ToString("X2")
+            }
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.content)
         </dt>
-        <dd>
-            @Html.DisplayFor(model => model.content)
+        <dd style="word-wrap:break-word">
+            @foreach (byte part in Model.content)
+            {
+                @part.ToString("X2")
+            }
         </dd>
     </dl>
 </div>

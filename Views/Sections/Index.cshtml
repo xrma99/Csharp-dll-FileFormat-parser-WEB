@@ -64,22 +64,22 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table" style="table-layout:fixed; width:100%">
     <thead>
         <tr>
-            <th>
+            <th style="width:8%">
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
+            <th style="width:10%">
                 @Html.DisplayNameFor(model => model.Size)
             </th>
-            <th>
+            <th style="width:10%">
                 @Html.DisplayNameFor(model => model.Vaddr)
             </th>
-            <th>
+            <th style="width:10%">
                 @Html.DisplayNameFor(model => model.Total_sz)
             </th>
-            <th>
+            <th style="width:62%">
                 @Html.DisplayNameFor(model => model.content)
             </th>
             <th></th>
@@ -93,16 +93,29 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Size)
+                    @foreach (byte part in item.Size)
+                    {
+                        @part.ToString("X2")
+                    }
+                    <!--@Html.DisplayFor(modelItem => item.Size)-->
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Vaddr)
+                    @foreach (byte part in item.Vaddr)
+                    {
+                        @part.ToString("X2")
+                    }
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Total_sz)
+                    @foreach (byte part in item.Total_sz)
+                    {
+                        @part.ToString("X2")
+                    }
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.content)
+                <td style="word-wrap:break-word">
+                    @foreach (byte part in item.content)
+                    {
+                        @part.ToString("X2")
+                    }
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
