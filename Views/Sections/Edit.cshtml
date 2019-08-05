@@ -1,0 +1,54 @@
+﻿@model FileUpload.Models.Section
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Section</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Size" class="control-label"></label>
+                <input asp-for="Size" class="form-control" />
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vaddr" class="control-label"></label>
+                <input asp-for="Vaddr" class="form-control" />
+                <span asp-validation-for="Vaddr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Total_sz" class="control-label"></label>
+                <input asp-for="Total_sz" class="form-control" />
+                <span asp-validation-for="Total_sz" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="content" class="control-label"></label>
+                <input asp-for="content" class="form-control" />
+                <span asp-validation-for="content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

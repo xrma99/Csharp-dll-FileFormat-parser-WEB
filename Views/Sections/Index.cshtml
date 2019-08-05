@@ -1,0 +1,115 @@
+﻿@model IEnumerable<FileUpload.Models.Section>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2 style="text-align:center"><strong>Parse Result</strong></h2>
+<br />
+<div>
+    <p><strong>MZ Header</strong></p>
+    <p>
+        Magic id:
+        @foreach (Byte part in ViewBag.MZid)
+        {
+            @part.ToString("X2");
+        }
+    </p>
+    <p>
+        Header size:
+        @foreach (Byte part in ViewBag.MZsize)
+        {
+            @part.ToString("X2");
+        }
+        paragraphs (16 bytes /paragraph)
+    </p>
+</div>
+<br />
+
+<div>
+    <p><strong>Default area</strong></p>
+    <p>@ViewBag.info</p>
+</div>
+<br />
+
+<div>
+    <p><strong>PE Header</strong></p>
+    <p>
+        Magic id:
+        @foreach (Byte part in ViewBag.PEid)
+        {
+            @part.ToString("X2");
+        }
+    </p>
+    <p>
+        Machine Type:
+        @foreach (Byte part in ViewBag.MachineType)
+        {
+            @part.ToString("X2");
+        }
+    </p>
+    <p>
+        Section Amount:
+        @foreach (Byte part in ViewBag.sectionamount)
+        {
+            @part.ToString("X2");
+        }
+    </p>
+</div>
+<br />
+
+
+<h3>Section</h3>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vaddr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total_sz)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.content)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vaddr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total_sz)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.content)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using FileUpload.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Microsoft.AspNetCore.Rewrite.Internal.PatternSegments;
 
 namespace FileUpload.Controllers
 {
@@ -33,20 +34,6 @@ namespace FileUpload.Controllers
 
         public IActionResult Privacy()
         {
-            return View();
-        }
-
-        public IActionResult Fileexecute(IFormFile file)
-        {
-            if (file != null)
-            {
-                string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                string SavePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images", filename);
-                using(var stream=new FileStream(SavePath, FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                }
-            }
             return View();
         }
 
