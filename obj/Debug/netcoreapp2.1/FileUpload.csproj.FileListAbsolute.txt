@@ -30,8 +30,7 @@ C:\Users\t-xinma\source\repos\FileUpload\obj\Debug\netcoreapp2.1\FileUpload.View
 C:\Users\t-xinma\source\repos\FileUpload\obj\Debug\netcoreapp2.1\FileUpload.dll
 C:\Users\t-xinma\source\repos\FileUpload\obj\Debug\netcoreapp2.1\FileUpload.pdb
 C:\Users\t-xinma\source\repos\FileUpload\obj\Debug\netcoreapp2.1\FileUpload.csproj.CopyComplete
-C:\Users\t-xinma\source\repos\FileUpload\obj\Debug\netcoreapp2.1\Razor\Views\Sections\Create.g.cshtml.cs
-C:\Users\t-xinma\source\repos\FileUpload\obj\Debug\netcoreapp2.1\Razor\Views\Sections\Delete.g.cshtml.cs
 C:\Users\t-xinma\source\repos\FileUpload\obj\Debug\netcoreapp2.1\Razor\Views\Sections\Details.g.cshtml.cs
-C:\Users\t-xinma\source\repos\FileUpload\obj\Debug\netcoreapp2.1\Razor\Views\Sections\Edit.g.cshtml.cs
 C:\Users\t-xinma\source\repos\FileUpload\obj\Debug\netcoreapp2.1\Razor\Views\Sections\Index.g.cshtml.cs
+C:\Users\t-xinma\source\repos\FileUpload\obj\Debug\netcoreapp2.1\Razor\Views\Sections\Error.g.cshtml.cs
+C:\Users\t-xinma\source\repos\FileUpload\bin\Debug\netcoreapp2.1\epengine.dll

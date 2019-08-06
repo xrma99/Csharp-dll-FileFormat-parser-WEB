@@ -2,6 +2,17 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.1": {
+      "ExpertPdfHtmlToPdf/14.0.0": {
+        "type": "package",
+        "contentFiles": {
+          "contentFiles/any/any/epengine.dll": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "epengine.dll"
+          }
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "type": "package",
         "dependencies": {
@@ -4619,6 +4630,25 @@
     }
   },
   "libraries": {
+    "ExpertPdfHtmlToPdf/14.0.0": {
+      "sha512": "rtEn59A0DIhHBut6CGHNlbSnCy9TU1ZgsT00EwsE+R3YmvYKc0dqNi2Qiv3KyZACG70i+mvfzc8H0zQp0miskg==",
+      "type": "package",
+      "path": "expertpdfhtmltopdf/14.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "contentFiles/any/any/epengine.dll",
+        "expertpdfhtmltopdf.14.0.0.nupkg.sha512",
+        "expertpdfhtmltopdf.nuspec",
+        "lib/net20/epengine.dll",
+        "lib/net20/ephtmltopdf.dll",
+        "lib/net20/ephtmltopdf.xml",
+        "lib/net40/epengine.dll",
+        "lib/net40/ephtmltopdf.dll",
+        "lib/net40/ephtmltopdf.xml",
+        "readme.txt"
+      ]
+    },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "sha512": "owAlEIUZXWSnkK8Z1c+zR47A0X6ykF4XjbPok4lQKNuciUfHLGPd6QnI+rt/8KlQ17PmF+I4S3f+m+Qe4IvViw==",
       "type": "package",
@@ -12525,6 +12555,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
+      "ExpertPdfHtmlToPdf >= 14.0.0",
       "Microsoft.AspNetCore.App >= 2.1.1",
       "Microsoft.AspNetCore.Razor.Design >= 2.1.2",
       "Microsoft.NETCore.App >= 2.1.0",
@@ -12572,6 +12603,10 @@
     "frameworks": {
       "netcoreapp2.1": {
         "dependencies": {
+          "ExpertPdfHtmlToPdf": {
+            "target": "Package",
+            "version": "[14.0.0, )"
+          },
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
             "target": "Package",

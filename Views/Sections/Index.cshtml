@@ -5,7 +5,9 @@
 }
 
 <h2 style="text-align:center"><strong>Parse Result</strong></h2>
+<p style="text-align:center">@ViewData["name"]</p>
 <br />
+
 <div>
     <p><strong>MZ Header</strong></p>
     <p>
@@ -61,9 +63,6 @@
 
 <h3>Section</h3>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table" style="table-layout:fixed; width:100%">
     <thead>
         <tr>
@@ -118,11 +117,15 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<p>
+    <a href="/Sections/Index.html" download="target.html">
+        Export This Page to PDF.
+    </a>
+</p>

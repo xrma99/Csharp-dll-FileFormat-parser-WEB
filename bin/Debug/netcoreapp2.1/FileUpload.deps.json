@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "3d650778e3500094e38cb51398f5ded5c197beae"
+    "signature": "7d2044337ec9d5c12e76f317b883857f772435d1"
   },
   "compilationOptions": {
     "defines": [
@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v2.1": {
       "FileUpload/1.0.0": {
         "dependencies": {
+          "ExpertPdfHtmlToPdf": "14.0.0",
           "Microsoft.AspNetCore.App": "2.1.1",
           "Microsoft.AspNetCore.Razor.Design": "2.1.2",
           "Microsoft.NETCore.App": "2.1.0",
@@ -36,6 +37,7 @@
           "FileUpload.dll": {}
         }
       },
+      "ExpertPdfHtmlToPdf/14.0.0": {},
       "Microsoft.AspNetCore.Razor.Design/2.1.2": {},
       "Microsoft.CodeAnalysis.CSharp.Workspaces/2.8.0": {
         "dependencies": {
@@ -3461,6 +3463,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "ExpertPdfHtmlToPdf/14.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rtEn59A0DIhHBut6CGHNlbSnCy9TU1ZgsT00EwsE+R3YmvYKc0dqNi2Qiv3KyZACG70i+mvfzc8H0zQp0miskg==",
+      "path": "expertpdfhtmltopdf/14.0.0",
+      "hashPath": "expertpdfhtmltopdf.14.0.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Razor.Design/2.1.2": {
       "type": "package",

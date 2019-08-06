@@ -8,9 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using FileUpload.Models;
 using Microsoft.AspNetCore.Http;
 
+
 using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 
 namespace FileUpload.Controllers
 {
@@ -49,11 +48,11 @@ namespace FileUpload.Controllers
 
         }
 
-        public void analyze(string filename)
+        public void analyze(string filepath)
         {
             ViewData["title"] = "Result";
 
-            FileStream fs = new FileStream(@".\wwwroot\dllfiles\CsharpHelloworld.dll", FileMode.Open);
+            FileStream fs = new FileStream(filepath, FileMode.Open);
             BinaryReader br = new BinaryReader(fs);
             Byte content;
             char c;
@@ -186,8 +185,10 @@ namespace FileUpload.Controllers
         // GET: Sections
         [HttpPost("Sections")]
         public async Task<IActionResult> Index(IFormFile file)
+
         {
             string filename = string.Empty;
+            ViewData["name"] = file.FileName;
             if (file != null)
             {
                 filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
@@ -196,10 +197,17 @@ namespace FileUpload.Controllers
                 {
                     file.CopyTo(stream);
                 }
-                return RedirectToAction("Create");
+                analyze(SavePath);
+                System.IO.File.Delete(SavePath);
+                return View(await _context.Section.ToListAsync());
             }
-            analyze(filename);
-            return  View(await _context.Section.ToListAsync());
+            return  RedirectToAction("Error");
+
+        }
+
+        public IActionResult Error()
+        {
+            return View();
         }
 
         // GET: Sections/Details/5
@@ -218,110 +226,8 @@ namespace FileUpload.Controllers
             }
 
             return View(section);
-        }
-
-        // GET: Sections/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Sections/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Size,Vaddr,Total_sz,content")] Section section)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(section);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(section);
-        }
-
-        // GET: Sections/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var section = await _context.Section.FindAsync(id);
-            if (section == null)
-            {
-                return NotFound();
-            }
-            return View(section);
-        }
-
-        // POST: Sections/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Size,Vaddr,Total_sz,content")] Section section)
-        {
-            if (id != section.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(section);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SectionExists(section.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(section);
-        }
-
-        // GET: Sections/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var section = await _context.Section
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (section == null)
-            {
-                return NotFound();
-            }
-
-            return View(section);
-        }
-
-        // POST: Sections/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var section = await _context.Section.FindAsync(id);
-            _context.Section.Remove(section);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
+        }       
+       
         private bool SectionExists(int id)
         {
             return _context.Section.Any(e => e.Id == id);
