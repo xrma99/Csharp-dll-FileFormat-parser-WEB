@@ -34,3 +34,4 @@ C:\Users\t-xinma\source\repos\FileUpload\obj\Debug\netcoreapp2.1\Razor\Views\Sec
 C:\Users\t-xinma\source\repos\FileUpload\obj\Debug\netcoreapp2.1\Razor\Views\Sections\Index.g.cshtml.cs
 C:\Users\t-xinma\source\repos\FileUpload\obj\Debug\netcoreapp2.1\Razor\Views\Sections\Error.g.cshtml.cs
 C:\Users\t-xinma\source\repos\FileUpload\bin\Debug\netcoreapp2.1\epengine.dll
+C:\Users\t-xinma\source\repos\FileUpload\obj\Debug\netcoreapp2.1\Razor\Views\Sections\PDFguide.g.cshtml.cs

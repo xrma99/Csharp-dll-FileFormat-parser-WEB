@@ -41,13 +41,13 @@
       "frameworks": {
         "netcoreapp2.1": {
           "dependencies": {
-            "Aspose.PDF": {
-              "target": "Package",
-              "version": "[19.8.0, )"
-            },
             "ExpertPdfHtmlToPdf": {
               "target": "Package",
               "version": "[14.0.0, )"
+            },
+            "HtmlRenderer.PdfSharp": {
+              "target": "Package",
+              "version": "[1.5.0.6, )"
             },
             "Microsoft.AspNetCore.App": {
               "suppressParent": "All",
@@ -58,9 +58,10 @@
             "Microsoft.AspNetCore.Razor.Design": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[2.1.2, )"
+              "version": "[2.2.0, )"
             },
             "Microsoft.NETCore.App": {
+              "suppressParent": "All",
               "target": "Package",
               "version": "[2.1.0, )",
               "autoReferenced": true

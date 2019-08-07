@@ -10,6 +10,10 @@ using Microsoft.AspNetCore.Http;
 
 
 using System.IO;
+using PdfSharp.Pdf;
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 
 namespace FileUpload.Controllers
 {
@@ -199,10 +203,34 @@ namespace FileUpload.Controllers
                 }
                 analyze(SavePath);
                 System.IO.File.Delete(SavePath);
+
                 return View(await _context.Section.ToListAsync());
             }
             return  RedirectToAction("Error");
 
+        }
+
+        public IActionResult PDFguide(string srcurl)
+        {
+            /*
+            Byte[] res = null;
+            using (MemoryStream ms=new MemoryStream())
+            {
+                var pdf = TheArtOfDev.HtmlRenderer.PdfSharp.PdfGenerator.GeneratePdf(srcurl, PdfSharp.PageSize.A4);
+                pdf.Save(ms);
+                res = ms.ToArray();
+                return pdf;
+            }
+            //return HtmlEncoder.Default.Encode($"Hello {srcurl}");
+            */
+            return View();
+            
+            
+        }
+
+        public string ExportPDF(string srcurl)
+        {
+            return HtmlEncoder.Default.Encode($"Hello {srcurl}");
         }
 
         public IActionResult Error()

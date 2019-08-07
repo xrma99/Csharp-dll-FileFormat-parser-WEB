@@ -3,62 +3,68 @@
 @{
     ViewData["Title"] = "Index";
 }
+<script src="~/js/site.js"></script>
 
-<h2 style="text-align:center"><strong>Parse Result</strong></h2>
-<p style="text-align:center">@ViewData["name"]</p>
-<br />
+<div id="pdftarget">
+    <h2 style="text-align:center"><strong>Parse Result</strong></h2>
+    <p style="text-align:center">@ViewData["name"]</p>
+    <br />
 
-<div>
-    <p><strong>MZ Header</strong></p>
-    <p>
-        Magic id:
-        @foreach (Byte part in ViewBag.MZid)
-        {
-            @part.ToString("X2");
-        }
-    </p>
-    <p>
-        Header size:
-        @foreach (Byte part in ViewBag.MZsize)
-        {
-            @part.ToString("X2");
-        }
-        paragraphs (16 bytes /paragraph)
-    </p>
+    <div>
+        <p><strong>MZ Header</strong></p>
+        <p>
+            Magic id:
+            @foreach (Byte part in ViewBag.MZid)
+            {
+                @part.ToString("X2");
+            }
+        </p>
+        <p>
+            Header size:
+            @foreach (Byte part in ViewBag.MZsize)
+            {
+                @part.ToString("X2");
+            }
+            paragraphs (16 bytes /paragraph)
+        </p>
+    </div>
+    <br />
+
+    <div>
+        <p><strong>Default area</strong></p>
+        <p>@ViewBag.info</p>
+    </div>
+    <br />
+
+    <div>
+        <p><strong>PE Header</strong></p>
+        <p>
+            Magic id:
+            @foreach (Byte part in ViewBag.PEid)
+            {
+                @part.ToString("X2");
+            }
+        </p>
+        <p>
+            Machine Type:
+            @foreach (Byte part in ViewBag.MachineType)
+            {
+                @part.ToString("X2");
+            }
+        </p>
+        <p>
+            Section Amount:
+            @foreach (Byte part in ViewBag.sectionamount)
+            {
+                @part.ToString("X2");
+            }
+        </p>
+    </div>
+    <br />
+
+
 </div>
-<br />
 
-<div>
-    <p><strong>Default area</strong></p>
-    <p>@ViewBag.info</p>
-</div>
-<br />
-
-<div>
-    <p><strong>PE Header</strong></p>
-    <p>
-        Magic id:
-        @foreach (Byte part in ViewBag.PEid)
-        {
-            @part.ToString("X2");
-        }
-    </p>
-    <p>
-        Machine Type:
-        @foreach (Byte part in ViewBag.MachineType)
-        {
-            @part.ToString("X2");
-        }
-    </p>
-    <p>
-        Section Amount:
-        @foreach (Byte part in ViewBag.sectionamount)
-        {
-            @part.ToString("X2");
-        }
-    </p>
-</div>
-<br />
 
 
 <h3>Section</h3>
@@ -124,8 +130,28 @@
     </tbody>
 </table>
 
-<p>
-    <a href="/Sections/Index.html" download="target.html">
-        Export This Page to PDF.
-    </a>
-</p>
+
+
+
+<a href="/Sections/PDFguide" target="_blank">PDF guide</a>
+
+<a asp-action="ExportPDF" asp-route-srcurl="yoyo" style="float:right">Export this page to pdf file</a>
+<br />
+<input type="button" id="btnExport" value="Export" onclick="Export()" class="auto-style5" />
+
+
+<script src="~/js/jsfiles/pdfmake.min.js"></script>
+<script src="~/js/jsfiles/html2canvas.min.js"></script>
+<script>
+    function Export() {
+        alert("hello");
+        html2canvas(document.getElementById('pdftarget'), {
+            onrendered: function (canvas) {
+                var data = canvas.toDataURL();
+                var docDefinition = { content: [{ image: data, width: 500 }] };
+                pdfMake.createPdf(docDefinition).download("result.pdf");
+                alert("Downloading Started");
+            }
+        });
+    }
+</script>
