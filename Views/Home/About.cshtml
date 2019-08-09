@@ -1,7 +1,216 @@
 ﻿@{
     ViewData["Title"] = "About";
 }
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
+<h3><strong>More detailed information about C# DLL file format</strong></h3>
+
+<div>
+    <p>The C# DLL file can be divided into two main parts: Header and Content.</p>
+    <p>The Header consists of four parts. Composition and order are shown as follows:</p>
+    <p>
+        <ul>
+            <li>MZ header: Magic id 0x4D5A</li>
+            <li>Default Part</li>
+            <li>PE header: Magic id 0x50450000</li>
+            <li>Section headers</li>
+        </ul>
+    </p>
+    <p>The Content is the sections content followed by the headers' order.</p>
+</div>
+
+<style>
+    table, th, td {
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        margin: auto
+    }
+</style>
+
+<div>
+    <p><strong>Schematic diagram</strong></p>
+    <table class="table" border="1">
+        <tbody>
+            <tr>
+                <td>MZ header (/paragraph)</td>
+            </tr>
+            <tr>
+                <td>Default Part (64 Bytes)</td>
+            </tr>
+            <tr>
+                <td>PE header (Optional Header Included)</td>
+            </tr>
+            <tr>
+                <td>Section1 header (40 Bytes)</td>
+            </tr>
+            <tr>
+                <td>Section2 header (40 Bytes)</td>
+            </tr>
+            <tr>
+                <td>Section3 header (40 Bytes)</td>
+            </tr>
+            <tr>
+                <td>......</td>
+            </tr>
+            <tr>
+                <td>Reserved (16 Bytes, included in optional header)</td>
+            </tr>
+            <tr>
+                <td>Section1 content</td>
+            </tr>
+            <tr>
+                <td>Section2 content</td>
+            </tr>
+            <tr>
+                <td>Section3 content</td>
+            </tr>
+            <tr>
+                <td>......</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <p><strong>MZ header</strong></p>
+    <table class="table" border="1">
+        <thead>
+            <tr>
+                <th colspan="8">
+                    16 Bytes
+                </th>
+            </tr>
+            <tr>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>0x4D5A</td>
+                <td>Number of Bytes in the last block</td>
+                <td>Number of block</td>
+                <td>Number of relocation entries</td>
+                <td>Size of MZ header (unit:paragraph)</td>
+                <td>Additional memory needed</td>
+                <td>Maximum number of the stack</td>
+                <td>Minimum number of the stack</td>
+            </tr>
+            <tr>
+                <td>Initial value of the SP register</td>
+                <td>Work checksum</td>
+                <td>Initial value of the IP register</td>
+                <td>Initial value of the CS register</td>
+                <td>Offset of the first relocation item</td>
+                <td>Overlay number</td>
+                <td colspan="2">Reserved</td>
+            </tr>
+            <tr>
+                <td colspan="2">Reserved</td>
+                <td>OEM identifier</td>
+                <td>OEM information</td>
+                <td colspan="4">Reserved</td>
+            </tr>
+            <tr>
+                <td colspan="6">Reserved</td>
+                <td colspan="2">File address of the new exe header</td>
+            </tr>
+            <tr>
+                <td colspan="8">(Additional Information)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <p><strong>Default Part (64 Bytes)</strong></p>
+    <p>Show the string <strong>This program cannot be run in DOS mode.</strong></p>
+</div>
+
+<div>
+    <p><strong>PE header</strong></p>
+    <table class="table" border="1">
+        <thead>
+            <tr>
+                <th colspan="8">
+                    16 Bytes
+                </th>
+            </tr>
+            <tr>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="2">0x50450000</td>
+                <td>Machine type</td>
+                <td>Number of Sections</td>
+                <td colspan="2">(Unknown)</td>
+                <td colspan="2">Pointer To Symbol Table</td>
+            </tr>
+            <tr>
+                <td colspan="2">Number of Symbols</td>
+                <td>Size of Optional Header</td>
+                <td>Characteristics</td>
+                <td colspan="4">(Optional Header)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <p><strong>Section Header</strong></p>
+    <table class="table" border="1">
+        <thead>
+            <tr>
+                <th colspan="8">
+                    16 Bytes
+                </th>
+            </tr>
+            <tr>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+                <th>2 Bytes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="4">section name</td>
+                <td colspan="2">Valid Size</td>
+                <td colspan="2">Virtual Address</td>
+            </tr>
+            <tr>
+                <td colspan="2">Total Size (Valid+Reserved)</td>
+                <td colspan="2">Pointer to content</td>
+                <td colspan="2">Pointer to relocations</td>
+                <td colspan="2">Pointer to Line numbers</td>
+            </tr>
+            <tr>
+                <td>Number of Relocations</td>
+                <td>Number of Line numbers</td>
+                <td colspan="2">Characteristics</td>
+                <td colspan="4" style="background-color:burlywood"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

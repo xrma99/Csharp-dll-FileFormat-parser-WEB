@@ -3,7 +3,12 @@
 @{
     ViewData["Title"] = "Index";
 }
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.5/jspdf.plugin.autotable.min.js"></script>
 <script src="~/js/site.js"></script>
+<script src="~/js/jsfiles/pdfmake.min.js"></script>
+<script src="~/js/jsfiles/html2canvas.min.js"></script>
 
 <div id="pdftarget">
     <h2 style="text-align:center"><strong>Parse Result</strong></h2>
@@ -66,10 +71,9 @@
 </div>
 
 
-
 <h3>Section</h3>
 
-<table class="table" style="table-layout:fixed; width:100%">
+<table id="example" class="table" style="table-layout:fixed; width:100%">
     <thead>
         <tr>
             <th style="width:8%">
@@ -102,7 +106,7 @@
                     {
                         @part.ToString("X2")
                     }
-                    <!--@Html.DisplayFor(modelItem => item.Size)-->
+                    @Html.DisplayFor(modelItem => item.Size)
                 </td>
                 <td>
                     @foreach (byte part in item.Vaddr)
@@ -131,20 +135,103 @@
 </table>
 
 
+<a href="/Sections/PDFguide" target="_blank">Guide to get a full PDF</a>
 
-
-<a href="/Sections/PDFguide" target="_blank">PDF guide</a>
-
-<a asp-action="ExportPDF" asp-route-srcurl="yoyo" style="float:right">Export this page to pdf file</a>
+<a asp-action="ExportPDF" asp-route-srcurl="Dude" style="float:right">Export this page to pdf file</a>
 <br />
-<input type="button" id="btnExport" value="Export" onclick="Export()" class="auto-style5" />
+<input type="button" id="btnExport" value="Export headers to PDF" onclick="Export()" class="auto-style5" />
+<button id="pdf" class="btn btn-danger">Export Section Content to PDF</button>
+
+<script>
+    $('#pdf').click(function () {
+        alert("chuck");
+        var options = {
+            separator: ',',
+            newline: '\r\n',
+            ignoreColumns: '',
+            ignoreRows: '',
+            type: 'pdf',
+            htmlContent: false,
+            consoleLog: false,
+            trimContent: true,
+            quoteFields: true,
+            filename: 'sample.pdf',
+            utf8BOM: true
+        };
+
+        function quote(text) {
+            return '"' + text.replace('"', '""') + '"';
+        }
 
 
-<script src="~/js/jsfiles/pdfmake.min.js"></script>
-<script src="~/js/jsfiles/html2canvas.min.js"></script>
+        function parseString(data) {
+
+            if (options.htmlContent) {
+                content_data = data.html().trim();
+            } else {
+                content_data = data.text().trim();
+            }
+            return content_data;
+        }
+
+
+
+        function toJson(el) {
+
+            var jsonHeaderArray = [];
+            $(el).find('thead').find('tr').not(options.ignoreRows).each(function () {
+                var tdData = "";
+                var jsonArrayTd = [];
+
+                $(this).find('th').not(options.ignoreColumns).each(function (index, data) {
+                    if ($(this).css('display') != 'none') {
+                        jsonArrayTd.push(parseString($(this)));
+                    }
+                });
+                jsonHeaderArray.push(jsonArrayTd);
+
+            });
+
+            var jsonArray = [];
+            $(el).find('tbody').find('tr').not(options.ignoreRows).each(function () {
+                var tdData = "";
+                var jsonArrayTd = [];
+
+                $(this).find('td').not(options.ignoreColumns).each(function (index, data) {
+                    if ($(this).css('display') != 'none') {
+                        jsonArrayTd.push(parseString($(this)));
+                    }
+                });
+                jsonArray.push(jsonArrayTd);
+
+            });
+
+
+            return { header: jsonHeaderArray[0], data: jsonArray };
+        }
+
+        var el = '#example';
+        
+
+        var jsonExportArray = toJson(el);
+
+        if (options.consoleLog) {//default: false
+            console.log(jsonExportArray);
+        }
+
+        var doc = new jsPDF('p', 'pt');//(orientation, unit, format, compress);
+        doc.autoTable(jsonExportArray.header, jsonExportArray.data);
+        doc.save(options.filename);
+
+                
+        return this;
+
+    })
+</script>
+
+
 <script>
     function Export() {
-        alert("hello");
         html2canvas(document.getElementById('pdftarget'), {
             onrendered: function (canvas) {
                 var data = canvas.toDataURL();
@@ -154,4 +241,6 @@
             }
         });
     }
+
 </script>
+

@@ -87,7 +87,7 @@ namespace FileUpload.Controllers
                         flag++;
                         break;
 
-                    case 1://default part
+                    case 1://default part --- 64 bytes
                         br.ReadBytes(14);
 
                         string info = string.Empty;
@@ -175,7 +175,7 @@ namespace FileUpload.Controllers
                         flag++;
                         break;
                     default:
-                        Console.Write(br.ReadByte().ToString("X"));
+                        br.ReadByte();
                         break;
                 }
 
@@ -230,7 +230,7 @@ namespace FileUpload.Controllers
 
         public string ExportPDF(string srcurl)
         {
-            return HtmlEncoder.Default.Encode($"Hello {srcurl}");
+            return HtmlEncoder.Default.Encode($"Hello {srcurl}, It\'s not the real one :)");
         }
 
         public IActionResult Error()
